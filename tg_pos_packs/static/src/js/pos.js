@@ -50,12 +50,6 @@ function tg_pos_packs(instance, module){
                 }
             }
 
-            var line = new module.Orderline({pos: this.pos, order: this, product: product});
-
-            if(options.quantity !== undefined){
-                line.set_quantity(options.quantity);
-            }
-
             if(!product.is_pack || options.is_pack_container)
                 return OrderSuper.prototype.addProduct.call(this, product, options)
             // this is a Pack !!
@@ -222,6 +216,7 @@ function tg_pos_packs(instance, module){
             OrderlineSuper.prototype.initialize.call(attr, options)
         },
          */
+        /*
         set_quantity: function(quantity){
             var self = this;
             var product = this.get_product();
@@ -256,7 +251,7 @@ function tg_pos_packs(instance, module){
                     return OrderlineSuper.prototype.set_quantity.call(this, quantity);
                 }
             }
-        },
+        },*/
 
         // when we add an new orderline we want to merge it with the last line to see reduce the number of items
         // in the orderline. This returns true if it makes sense to merge the two
