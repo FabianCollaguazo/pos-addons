@@ -37,11 +37,13 @@ class product_pack(orm.Model):
         'group_id': fields.integer('Group number', help='Set a number to group items'),
         'quantity': fields.float('Quantity'),
         'sequence': fields.integer('Sequence'),
+        'printable': fields.boolean('Printable'),
     }
     _defaults = {
         'quantity': 1,
         'sequence': 1,
         'group_id': 1,
+        'printable': True,
     }
 
 class inherit_product(orm.Model):
@@ -141,5 +143,16 @@ class inherit_product_public_category(orm.Model):
         if not pack_ids:
             self.create(cr, 1, {'name': 'Custom Packs', 'is_pack': True})
         return True
+
+class pos_order_line(orm.Model):
+    _inherit = "pos.order.line"
+
+    _columns = {
+        'printable_kitchen_ticket': fields.boolean('Printable Kitchen Ticket'),
+    }
+    _defaults = {
+        'printable_kitchen_ticket': True,
+    }
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

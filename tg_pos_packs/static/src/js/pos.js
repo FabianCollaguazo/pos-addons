@@ -42,10 +42,10 @@ function tg_pos_packs(instance, module){
                                    },
                                    JSON.parse(JSON.stringify(product)))
                 if (options.is_pack_container){
-                    product.display_name = '■ ' + product.display_name
+                    product.display_name = product.display_name
                 }
                 if (options.is_pack_item){
-                    product.display_name = '⁪├ ' + product.display_name
+                    product.display_name = '⁪- ' + product.display_name
                     product.price = 0;
                 }
             }
@@ -66,7 +66,7 @@ function tg_pos_packs(instance, module){
             var grp_id = 0;
             var item_number = 0;
 
-            var loaded = self.pos.fetch('product.pack',['item_tmpl_id', 'group_id', 'quantity'],[['product_id','=', parseInt(pack_id)]])
+            var loaded = self.pos.fetch('product.pack',['item_tmpl_id', 'group_id', 'quantity', 'printable'],[['product_id','=', parseInt(pack_id)]])
                 .then(function(groupe_tmpl){
 
                     for(var i = 0, len = groupe_tmpl.length; i < len; i++){
@@ -75,6 +75,7 @@ function tg_pos_packs(instance, module){
                         if(groupe_tmpl[i].group_id != grp_id){
                             grp_id = groupe_tmpl[i].group_id;
                             qty = groupe_tmpl[i].quantity;
+                            printable = groupe_tmpl[i].printable;
                             var one_pack = new module.PackWidget(this, {});
                             one_pack.appendTo($('#packs-list'));
 
@@ -161,7 +162,7 @@ function tg_pos_packs(instance, module){
 
                 //add products to the order
                 if(product){
-                    selectedOrder.addProduct(product, {is_pack_item:1, 'pack_code': pack_code, 'quantity': pack_qty});
+                    selectedOrder.addProduct(product, {is_pack_item:1, 'pack_code': pack_code, 'quantity': pack_qty, 'printable_kitchen_ticket': printable});
                 }
             };
 
